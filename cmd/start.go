@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/fzxiehui/net_to_uart/config"
 	"github.com/fzxiehui/net_to_uart/log"
 	"github.com/spf13/cobra"
 )
@@ -15,6 +16,17 @@ var startCmd = &cobra.Command{
 		log.Debug("start net_to_uart")
 		log.Debug(args)
 		log.Debug(configFile)
+
+		// config
+		cfg := config.Config()
+		if configFile != "" {
+			err := config.ReadViperConfigFromFile(configFile)
+			if err != nil {
+				log.Fatal(err)
+				return
+			}
+		}
+		log.Debug(cfg.GetString("loglevel"))
 	},
 }
 

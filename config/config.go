@@ -43,16 +43,22 @@ func init() {
 	defaultConfig = readViperConfig("NET_TO_UART")
 }
 
+func ReadViperConfigFromFile(configPath string) error {
+	defaultConfig.SetConfigFile(configPath)
+	// set defaultConfig
+	return defaultConfig.ReadInConfig()
+
+}
+
 func readViperConfig(appName string) *viper.Viper {
 	v := viper.New()
 	v.SetEnvPrefix(appName)
 	v.AutomaticEnv()
 
 	// global defaults
-	
+
 	v.SetDefault("json_logs", false)
 	v.SetDefault("loglevel", "debug")
-	
 
 	return v
 }
