@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/fzxiehui/net_to_uart/config"
+	"github.com/fzxiehui/net_to_uart/internal/mqtt2uart"
 	"github.com/fzxiehui/net_to_uart/log"
-	"github.com/fzxiehui/net_to_uart/pkg/uart"
 	"github.com/spf13/cobra"
 )
 
@@ -29,16 +29,9 @@ var startCmd = &cobra.Command{
 		}
 		log.Debug(cfg.GetString("loglevel"))
 
-		rt := uart.NewUart(cfg.GetString("uart.port"), cfg.GetInt("uart.baudrate"))
-		rt.Start()
-		defer rt.Close()
-		for {
-			select {
-			case data := <-rt.RecvChan:
-				log.Debug(data)
-			}
-			rt.SendChan <- []byte("hello")
-		}
+		m2u := mqtt2uart.NewMQTT2UART()
+		m2u.Start()
+
 	},
 }
 

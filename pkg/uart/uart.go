@@ -6,13 +6,13 @@ import (
 	"github.com/tarm/serial"
 )
 
-type Uart struct {
+type UART struct {
 	serialClient *serial.Port
 	SendChan     chan []byte
 	RecvChan     chan []byte
 }
 
-func NewUart(name string, baud int) *Uart {
+func NewUart(name string, baud int) *UART {
 	c := serial.Config{Name: name, Baud: baud}
 	s, err := serial.OpenPort(&c)
 
@@ -24,21 +24,21 @@ func NewUart(name string, baud int) *Uart {
 	sendChan := make(chan []byte, 512)
 	recvChan := make(chan []byte, 512)
 
-	return &Uart{
+	return &UART{
 		serialClient: s,
 		SendChan:     sendChan,
 		RecvChan:     recvChan,
 	}
 }
 
-func (u *Uart) Send() {
+func (u *UART) Send() {
 	for {
 		data := <-u.SendChan
 		u.serialClient.Write(data)
 	}
 }
 
-func (u *Uart) Recv() {
+func (u *UART) Recv() {
 	for {
 		data := make([]byte, 512)
 		n, err := u.serialClient.Read(data)
@@ -50,11 +50,11 @@ func (u *Uart) Recv() {
 	}
 }
 
-func (u *Uart) Close() {
+func (u *UART) Close() {
 	u.serialClient.Close()
 }
 
-func (u *Uart) Start() {
+func (u *UART) Start() {
 	go u.Send()
 	go u.Recv()
 }
