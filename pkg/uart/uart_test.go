@@ -1,19 +1,20 @@
 package uart
 
 import (
-	"fmt"
 	"testing"
+	"time"
+
+	"github.com/fzxiehui/net_to_uart/config"
 )
 
 func TestUart(t *testing.T) {
-	uart := NewUart("/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB0PFGMV-if00-port0", 9600)
+	cfg := config.Config()
+	uart := NewUart(cfg.GetString("uart.port"), cfg.GetInt("uart.baudrate"))
 	uart.Start()
-	defer uart.Close()
-
-	for {
-		select {
-		case data := <-uart.RecvChan:
-			fmt.Println(data)
-		}
-	}
+	uart.SendChan <- []byte("hello")
+	uart.SendChan <- []byte("world")
+	uart.SendChan <- []byte("!")
+	uart.SendChan <- []byte("!")
+	uart.SendChan <- []byte("!")
+	time.Sleep(2 * time.Second)
 }

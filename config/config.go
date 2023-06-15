@@ -59,6 +59,15 @@ func readViperConfig(appName string) *viper.Viper {
 
 	v.SetDefault("json_logs", false)
 	v.SetDefault("loglevel", "debug")
+	v.SetDefault("uart.port", "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB0PFGMV-if00-port0")
+	v.SetDefault("uart.baudrate", 9600)
+
+	v.SetDefault("mqtt.broker", "tcp://192.168.12.199:1883")
+	v.SetDefault("mqtt.clientid", "3722600978")
+	v.SetDefault("mqtt.username", "LOpbUOpEdK")
+	v.SetDefault("mqtt.password", "updOMeRVja")
+	v.SetDefault("mqtt.pub_topic", "/pub/model/3416275346/685104052/3722600978")
+	v.SetDefault("mqtt.sub_topic", "/sub/model/3416275346/685104052/3722600978")
 
 	return v
 }
