@@ -1,1 +1,9 @@
 loglevel: info
+mqtt:
+  client_id: 123456
+  username: test
+  password: test
+
+uart:
+  baudrate: 9600
+  port: /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB0PFGMV-if00-port0
