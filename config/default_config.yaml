@@ -1,8 +1,11 @@
 loglevel: info
 mqtt:
-  client_id: 123456
-  username: test
-  password: test
+  broker: tcp://192.168.12.199:1883
+  clientid: 3722600978
+  username: LOpbUOpEdK
+  password: updOMeRVja
+  pub_topic: /pub/model/3416275346/685104052/3722600978
+  sub_topic: /sub/model/3416275346/685104052/3722600978
 
 uart:
   baudrate: 9600
